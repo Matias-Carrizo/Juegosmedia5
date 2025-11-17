@@ -7,9 +7,10 @@
     <style>
         body {
             margin: 0;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            justify-content: flex-start;
             align-items: center;
             background: #f0f0f0;
             font-family: Arial, sans-serif;
@@ -37,9 +38,33 @@
             background: #1259a1;
             transform: scale(1.05);
         }
+    .hero {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 0;
+            background: #e8f5ff;
+        }
+        .hero-img {
+            width: 180px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        .hero-title {
+            font-size: 32px;
+            color: #1976d2;
+            margin: 0;
+        }
     </style>
 </head>
 <body>
+
+    <header class="hero">
+        <img src="imagen.jpeg" alt="Logo" class="hero-img" />
+        <h1 class="hero-title">Videojuegos Medioambientales</h1>
+    </header>
 
     <div class="menu">
         <a href="Agua/mango/index.html">Grupo 1</a>
@@ -49,6 +74,11 @@
         <a href="TRASHSTAGE/TRASH STAGE/IVANTILL/index.html">Grupo 5</a>
         
     </div>
-
 </body>
 </html>
+
+
+
+
+
+
