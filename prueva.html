@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Juego Plataformero con Dibujos</title>
+  <style>
+    body {
+      background-color: rgb(19, 250, 50); /* Fondo de la página */
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+    }
+    #score {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: black;
+      font-size: 24px;
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+    }
+    canvas {
+      border: 3px solid #fff;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div id="score">Monedas: 0</div>
+  <canvas id="gameCanvas" width="800" height="400"></canvas>
+
+<script>
+// ====== VARIABLES =======
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+
+const GRAVITY = 0.8;
+const JUMP_FORCE = -15;
+const FRICTION = 0.8;
+
+let scrollX = 0;
+let score = 0;
+
+// Jugador
+const player = {
+  x: 100,
+  y: 300,
+  width: 40,
+  height: 40,
+  velX: 0,
+  velY: 0,
+  grounded: false
+};
+
+// Plataformas
+const platforms = [
+  { x: 0, y: 360, width: 2000, height: 40 }, // suelo largo
+  { x: 300, y: 280, width: 120, height: 20 },
+  { x: 600, y: 220, width: 120, height: 20 },
+  { x: 900, y: 160, width: 120, height: 20 },
+  { x: 1300, y: 250, width: 120, height: 20 }
+];
+
+// Monedas
+const coins = [
+  { x: 350, y: 240, width: 30, height: 30, collected: false },
+  { x: 620, y: 180, width: 30, height: 30, collected: false },
+  { x: 940, y: 120, width: 30, height: 30, collected: false },
+  { x: 1350, y: 210, width: 30, height: 30, collected: false }
+];
+
+// Controles
+const keys = { right: false, left: false, up: false };
+
+document.addEventListener("keydown", (e) => {
+  if (e.code === "ArrowRight") keys.right = true;
+  if (e.code === "ArrowLeft") keys.left = true;
+  if (e.code === "ArrowUp") keys.up = true;
+});
+
+document.addEventListener("keyup", (e) => {
+  if (e.code === "ArrowRight") keys.right = false;
+  if (e.code === "ArrowLeft") keys.left = false;
+  if (e.code === "ArrowUp") keys.up = false;
+});
+
+// ====== LOOP PRINCIPAL ======
+function gameLoop() {
+  // Movimiento
+  if (keys.right) player.velX = 5;
+  else if (keys.left) player.velX = -5;
+  else player.velX *= FRICTION;
+
+  if (keys.up && player.grounded) {
+    player.velY = JUMP_FORCE;
+    player.grounded = false;
+  }
+
+  player.velY += GRAVITY;
+  player.x += player.velX;
+  player.y += player.velY;
+
+  if (player.x > canvas.width / 2) {
+    scrollX = player.x - canvas.width / 2;
+  }
+
+  // Colisiones plataformas
+  player.grounded = false;
+  for (let plat of platforms) {
+    if (
+      player.x < plat.x + plat.width &&
+      player.x + player.width > plat.x &&
+      player.y < plat.y + plat.height &&
+      player.y + player.height > plat.y
+    ) {
+      if (player.velY > 0) {
+        player.y = plat.y - player.height;
+        player.velY = 0;
+        player.grounded = true;
+      }
+    }
+  }
+
+  // Colisiones monedas
+  for (let coin of coins) {
+    if (!coin.collected &&
+      player.x < coin.x + coin.width &&
+      player.x + player.width > coin.x &&
+      player.y < coin.y + coin.height &&
+      player.y + player.height > coin.y
+    ) {
+      coin.collected = true;
+      score++;
+      document.getElementById("score").innerText = "Monedas: " + score;
+    }
+  }
+
+  // Caída al vacío
+  if (player.y > canvas.height) {
+    player.x = 100;
+    player.y = 300;
+    player.velY = 0;
+    scrollX = 0;
+  }
+
+  // ====== DIBUJAR ======
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Fondo simple
+  ctx.fillStyle = "skyblue";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Plataformas
+  ctx.fillStyle = "saddlebrown";
+  for (let plat of platforms) {
+    ctx.fillRect(plat.x - scrollX, plat.y, plat.width, plat.height);
+  }
+
+  // Monedas
+  ctx.fillStyle = "gold";
+  for (let coin of coins) {
+    if (!coin.collected) {
+      ctx.beginPath();
+      ctx.arc(coin.x - scrollX + coin.width/2, coin.y + coin.height/2, coin.width/2, 0, Math.PI*2);
+      ctx.fill();
+    }
+  }
+
+  // Jugador
+  ctx.fillStyle = "red";
+  ctx.fillRect(player.x - scrollX, player.y, player.width, player.height);
+
+  requestAnimationFrame(gameLoop);
+}
+
+// ====== INICIO ======
+window.onload = () => {
+  gameLoop();
+};
+</script>
+</body>
+</html>

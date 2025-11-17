@@ -1,0 +1,11 @@
+Creado por: Luciano Villagra, Angel Tolosa,  Sami Anzulovic (dio la ia,gracias)
+
+apoyo moral: Juan Manuel Becerra
+
+En este juego consiste en una sopa de letras con las tres r relacionado con la ecologia y el ambiente como base 
+para la busqueda de palabras.Para jugar se presionaran las letras que apareceran en la pantalla con mouse 
+presionando con el click izquierdo,las letras correctas son las unicas que se resaltaran cuando sean presionadas. 
+
+la recompensa por terminar el juego sera un aplausin.
+
+Archivos: Apto.css; dios.js; index-pua vida.html(para iniciar el juego dar click en el archivo del mismo nombre)
