@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Arrastrar al Basurero</title>
+    <link rel="stylesheet" href="nivel3.css">
+</head>
+<body>
+    <div id="game-container">
+        <h1>¡Arrastra la Basura!</h1>
+        <div id="info">
+            <p>Puntuación: <span id="score">0</span></p>
+            <p>Tiempo restante: <span id="timer">60</span> segundos</p>
+        </div>
+
+        <div id="images-container">
+            <img id="bolsa roja" class="draggable-image" src="bolsa-roja.jpg" draggable="true" alt="bolsa roja">
+            <img id="lindo" class="draggable-image" src="gato.jpg" draggable="true" alt="lindo">
+            <img id="botellita" class="draggable-image" src="botella.jpg" draggable="true" alt="botellita">
+            <img id="abcd" class="draggable-image"src="vidrio roto.jpg" draggable="true" alt="abcd">
+            <img id="hola" class="draggable-image" src="carton.jpg" draggable="true" alt="hola">
+    <img id="perro" class="draggable-image" src="perri.jpg" draggable="true" alt="perro">
+    <img id="dios" class="draggable-image" src="capigod.jpg" draggable="true" alt="dios">
+</div>
+        <div id="trash-can" ondragover="allowDrop(event)" ondrop="drop(event)">
+            🗑️
+            <p>Tacho de Basura</p>
+        </div>
+        <p>Tiempo total <span id="timer">60</span> segundos</p>
+      <button id="end-game-button">Terminar Juego</button>
+    </div>
+
+    <script src="nivel3.js"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+body {
+    background-color: green;
+    font-family: Arial, sans-serif; /* Mejora la legibilidad general */
+}
+
+/* Contenedor principal de la sopa de letras */
+#wordSearchContainer {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr); /* Ajusta según el tamaño deseado */
+    gap: 5px;
+    max-width: 500px; /* Ajusta según el tamaño deseado */
+    margin: 0 auto;
+}
+
+/* Celdas individuales: ahora soportan imágenes JPG como fondo */
+#wordSearchContainer div {
+    width: 60px; /* Aumentado ligeramente para mejor visualización de imágenes */
+    height: 60px; /* Aumentado ligeramente para mejor visualización de imágenes */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0; /* Color de fondo por defecto si no hay imagen */
+    background-size: cover; /* Ajusta la imagen para cubrir toda la celda sin distorsión */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita repetición de la imagen */
+    cursor: pointer;
+    border-radius: 4px; /* Bordes redondeados para un look moderno */
+    transition: all 0.3s ease; /* Transición suave para cambios de estado */
+    color: white; /* Color de texto blanco para contrastar con imágenes */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* Sombra para legibilidad sobre imágenes */
+    font-weight: bold; /* Hace las letras más visibles */
+}
+
+/* Estado seleccionado: opacidad para no ocultar la imagen */
+#wordSearchContainer div.selected {
+    background-color: rgba(173, 216, 230, 0.7); /* Azul claro con opacidad */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Sombra para destacar */
+}
+
+/* Clase general para seleccionado (verde claro con opacidad) */
+.selected {
+    background-color: rgba(144, 238, 144, 0.7); /* Verde claro con opacidad para no ocultar imagen */
+}
+
+/* Clase para palabras encontradas (rojo claro con opacidad) */
+.found {
+    background-color: rgba(255, 204, 203, 0.7); /* Rojo claro con opacidad para no ocultar imagen */
+    opacity: 0.8; /* Reduce ligeramente la opacidad para indicar "encontrado" */
+}
+
+/* Lista de palabras */
+.wordsList {
+    margin: 20px auto;
+    max-width: 90vw;
+    padding: 10px;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Elementos de la lista de palabras */
+.wordsList div {
+    padding: 8px 16px;
+    margin: 5px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    font-size: 16px;
+    text-align: center;
+    transition: background-color 0.3s ease; /* Transición suave */
+}
+
+/* Estilo para palabras encontradas en la lista */
+.wordsList div.found::after {
+    content: ' ✔️'; /* Añade una palomita después del texto */
+    color: green; /* Color verde para la palomita */
+}
+
+.wordsList div.found {
+    background-color: #90ee90; /* Verde claro para indicar que la palabra ha sido encontrada */
+    text-decoration: none; /* Remueve el line-through si prefieres no tachar la palabra */
+}
+
+/* Estilo opcional para imágenes si usas <img> tags en lugar de fondos */
+#wordSearchContainer img {
+    width: 100%; /* Ajusta la imagen al tamaño de la celda */
+    height: 100%;
+    object-fit: cover; /* Similar a background-size: cover */
+    border-radius: 4px; /* Coincide con el borde de la celda */
+}
+
+#wordSearchContainer div {
+    transition: transform 0.1s ease;
+}

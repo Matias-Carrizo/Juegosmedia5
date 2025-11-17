@@ -1,0 +1,73 @@
+body {
+        font-family: sans-serif;
+        text-align: center;
+        background-image: url('alylp4i5gpex.webp');
+        background-size: cover; 
+        background-attachment: fixed;
+        
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+#game-container {
+    text-align: center;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#info {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+
+#images-container {
+    min-height: 150px;
+    margin-bottom: 30px;
+    border: 2px dashed #ccc;
+    padding: 10px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+.draggable-image {
+    width: 80px;
+    height: 80px;
+    cursor: grab;
+    border: 2px solid #333;
+    border-radius: 5px;
+}
+
+#trash-can {
+    width: 150px;
+    height: 150px;
+    background-color: #e74c3c;
+    border-radius: 10px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 3em;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+#trash-can p {
+    font-size: 0.5em;
+    margin-top: 5px;
+}
+
+.hidden {
+    display: none !important;
+}

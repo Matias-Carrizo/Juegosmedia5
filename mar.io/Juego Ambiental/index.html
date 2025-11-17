@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Juego cuidar el Mar </title>
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* 1. Estilos del Cuerpo */
+        body {
+            display: flex; 
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #000;
+        }
+
+        /* 2. Pantalla de Inicio - Ahora con la imagen de fondo */
+        #startScreen {
+            /* Ocupa toda la vista disponible */
+            width: 100vw;
+            height: 100vh;
+            position: fixed; /* Fija la pantalla de inicio */
+            top: 0;
+            left: 0;
+            
+            /* Centra el contenido (título, botones) sobre la imagen */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            
+            color: white; /* Texto blanco para contraste */
+            text-shadow: 2px 2px 4px #000; /* Sombra para mejor legibilidad */
+        }
+        
+        /* Ocultamos la etiqueta <img> que ya no necesitamos */
+        #startImage {
+            display: none; 
+        }
+
+        /* 3. Estilos de Game Over (Mantener) */
+        /* Contenedor del Canvas (para referencia de posición) */
+        #gameScreen {
+            position: relative; 
+        }
+        
+        #gameOverScreen {
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0, 0, 0, 0.95); 
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        /* 🖼️ EL GIF OCUPA EL MISMO ESPACIO QUE EL CANVAS (Ajusta si es necesario) */
+        #gameOverGif {
+            position: absolute;
+            /* *** AJUSTA ESTOS VALORES AL TAMAÑO REAL DE TU CANVAS *** */
+            width: 1000px; 
+            height: 900px; 
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); 
+            object-fit: cover; 
+            z-index: 1; 
+            opacity: 0.7; 
+        }
+        
+        /* Contenido del texto y botones */
+        .gameOverContent {
+            z-index: 2; 
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7); 
+            border-radius: 10px;
+        }
+        
+        /* Estilos de botones (ejemplo) */
+        #startBtn, #tutorialtBtn, #retryBtn {
+            padding: 15px 30px; 
+            font-size: 1.2em; 
+            cursor: pointer; 
+            background-color: #007bff; /* Azul para el inicio */
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        #startBtn:hover, #tutorialtBtn:hover {
+            background-color: #0056b3;
+        }
+        #retryBtn {
+            background-color: #dc3545; /* Rojo para reintentar */
+        }
+    </style>
+</head>
+<body>
+    <div id="startScreen">
+        <h1> Cuidemos el Mar </h1>
+        
+        <img id="startImage" src="inicio.png" alt="Barco recolector en el mar" style="display: none;">
+        
+        <button id="startBtn">Comenzar</button>
+        <button onclick="window.location.href='tutorial.html'" id="tutorialtBtn">instrucciones</button>
+        <h2>Historial de puntajes</h2>
+        <ul id="scoreHistory"></ul>
+    </div>
+
+    <div id="gameScreen" style="display:none;">
+        <canvas id="gameCanvas" width="1000" height="900"></canvas>
+        <div id="scoreBoard">Puntos: 0</div>
+        <div id="timer">Tiempo: 60</div>
+    </div>
+
+    <div id="gameOverScreen" style="display: none;">
+        <img id="gameOverGif" src="oceano.gif" alt="Animación de Game Over">
+        <div class="gameOverContent">
+            <h2>¡JAJA!(game over wacho)</h2>
+            <p id="finalScoreDisplay" style="font-size: 1.5em; font-weight: bold; margin-bottom: 10px; color: #ccffff;">
+                Tu puntuación final es: 0
+            </p>
+            <div style="margin-top: 15px;">
+                <h3 style="color: yellow;">Puntajes Máximos Anteriores</h3>
+                <ul id="scoreHistoryGameOver" style="list-style-type: none; padding: 0; color: #ccc;">
+                </ul>
+            </div>
+            <button id="retryBtn">
+                ♻️ Reintentar
+            </button>
+        </div>
+    </div>
+    <div id="magnetStatus" style="position: absolute; top: 10px; right: 10px; width: 150px; height: 30px; background-color: #333; border: 2px solid gold; border-radius: 5px; overflow: hidden; display: none;">
+        <div id="magnetProgressBar" style="width: 100%; height: 100%; background-color: gold; transition: width 0.1s linear;">
+        </div>
+        <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: black; font-weight: bold; font-size: 14px;">IMÁN ACTIVO</span>
+    </div>
+
+    <script src="game.js"> </script>
+</body>
+</html>

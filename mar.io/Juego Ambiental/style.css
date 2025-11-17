@@ -1,0 +1,37 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: linear-gradient(to bottom, #4da6ff, #003366);
+    color: white;
+}
+#startScreen {
+    margin-top: 50px;
+}
+button {
+    padding: 10px 20px;
+    font-size: 18px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #00cc66;
+    color: white;
+    transition: background 0.3s;
+}
+button:hover {
+    background: #00994d;
+}
+ 
+#gameCanvas {
+    display: block;
+    margin: 20px auto;
+    background: #0077b3;
+    border: 3px solid white;
+    border-radius: 15px;
+}
+
+#scoreBoard {
+    font-size: 22px;
+    margin-top: 10px;
+}

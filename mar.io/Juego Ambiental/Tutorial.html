@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial del Juego (Imágenes)</title>
+    <style>
+        /* CSS se incluye aquí (ver sección 2) */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f8ff; 
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .tutorial-container {
+            width: 90%;
+            max-width: 900px; /* Limita el tamaño del carrusel */
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            overflow: hidden; /* Oculta las imágenes que están fuera de la vista */
+            position: relative;
+        }
+
+        /* Contenedor de las diapositivas que se deslizará */
+        .slides-wrapper {
+            display: flex;
+            transition: transform 0.4s ease-in-out; /* Transición suave al deslizar */
+        }
+
+        .slide {
+            min-width: 100%; /* Cada diapositiva ocupa todo el ancho del contenedor */
+            box-sizing: border-box;
+            text-align: center;
+        }
+        
+        /* Estilo para las imágenes del tutorial */
+        .slide img {
+            width: 100%;
+            height: auto;
+            max-height: 650px; /* Altura máxima para evitar que sea muy grande */
+            object-fit: contain; /* Asegura que la imagen se vea completa */
+            border-radius: 15px;
+        }
+
+        /* --------------------------------- */
+        /* Estilos de los Botones de Navegación */
+        /* --------------------------------- */
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 15px 10px;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 24px;
+            line-height: 1;
+            transition: background 0.3s;
+        }
+
+        .nav-button:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        #prevBtn {
+            left: 0;
+            border-radius: 0 15px 15px 0;
+        }
+
+        #nextBtn {
+            right: 0;
+            border-radius: 15px 0 0 15px;
+        }
+
+        /* --------------------------------- */
+        /* Estilos de los Indicadores (Dots) */
+        /* --------------------------------- */
+        .indicators {
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        .dot {
+            height: 12px;
+            width: 12px;
+            margin: 0 5px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background-color: #007bff; /* Azul activo */
+        }
+
+        /* --------------------------------- */
+        /* Estilo del Botón Regresar */
+        /* --------------------------------- */
+        .back-button {
+            display: block;
+            width: 200px;
+            padding: 12px;
+            margin: 30px auto 0;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="tutorial-container">
+        
+        <div class="slides-wrapper" id="slidesWrapper">
+            <div class="slide">
+                <img src="Captura1.PNG" alt="Paso 1: Controles">
+            </div>
+            <div class="slide">
+                <img src="Captura2.PNG" alt="Paso 2: Basura y Puntos">
+            </div>
+            <div class="slide">
+                <img src="Captura3.PNG" alt="Paso 3: Peligros y Remolinos">
+            </div>
+            </div>
+
+        <button class="nav-button" id="prevBtn">&#10094;</button>
+        <button class="nav-button" id="nextBtn">&#10095;</button>
+        
+    </div>
+
+    <div class="indicators" id="indicatorsContainer">
+        </div>
+
+    <button class="back-button" onclick="irMenuPrincipal()">Volver al Menú Principal</button>
+
+    <script>
+        // JavaScript se incluye aquí (ver sección 3)
+        document.addEventListener("DOMContentLoaded", () => {
+            const wrapper = document.getElementById("slidesWrapper");
+            const slides = wrapper.getElementsByClassName("slide");
+            const prevBtn = document.getElementById("prevBtn");
+            const nextBtn = document.getElementById("nextBtn");
+            const indicatorsContainer = document.getElementById("indicatorsContainer");
+
+            let currentSlide = 0;
+            const totalSlides = slides.length;
+
+            // Función para actualizar la visualización del carrusel
+            function updateCarousel() {
+                const offset = -currentSlide * 100;
+                wrapper.style.transform = `translateX(${offset}%)`;
+                updateIndicators();
+            }
+
+            // Función para generar y actualizar los indicadores (dots)
+            function updateIndicators() {
+                indicatorsContainer.innerHTML = ''; // Limpiar indicadores anteriores
+                for (let i = 0; i < totalSlides; i++) {
+                    const dot = document.createElement('span');
+                    dot.classList.add('dot');
+                    if (i === currentSlide) {
+                        dot.classList.add('active');
+                    }
+                    // Permite saltar a una diapositiva al hacer clic en el dot
+                    dot.addEventListener('click', () => {
+                        currentSlide = i;
+                        updateCarousel();
+                    });
+                    indicatorsContainer.appendChild(dot);
+                }
+                // Deshabilitar botones en los extremos
+                prevBtn.disabled = currentSlide === 0;
+                nextBtn.disabled = currentSlide === totalSlides - 1;
+            }
+
+            // Manejador del botón Anterior
+            prevBtn.addEventListener("click", () => {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    updateCarousel();
+                }
+            });
+
+            // Manejador del botón Siguiente
+            nextBtn.addEventListener("click", () => {
+                if (currentSlide < totalSlides - 1) {
+                    currentSlide++;
+                    updateCarousel();
+                }
+            });
+
+            // Inicializar el carrusel y los indicadores
+            updateCarousel(); 
+        });
+
+        // Función para volver a la pantalla principal
+        function irMenuPrincipal() {
+            // Asume que la pantalla de inicio o juego principal es index.html
+            window.location.href = "index.html"; 
+        }
+    </script>
+
+</body>
+</html>

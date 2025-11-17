@@ -1,0 +1,82 @@
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+    background-color: #e60d0d;
+    background-image: url('alylp4i5gpex.webp');
+    background-size: cover; 
+}
+
+.container {
+    width: 100%;
+    max-width: 700px;
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.paso {
+    display: none; 
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+.paso.activo {
+    display: block; 
+}
+
+.paso-titulo {
+    color: #007bff;
+    font-size: 1.8em;
+    margin-bottom: 10px;
+}
+
+.paso p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #555;
+}
+
+.botones-navegacion {
+    margin-top: 30px;
+}
+
+.btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 0 10px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+#btn-anterior,
+#mensaje-final {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

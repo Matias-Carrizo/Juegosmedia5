@@ -1,0 +1,40 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center; 
+    padding: 20px;
+    background-image: url('alylp4i5gpex.webp');
+    background-size: cover; 
+    background-attachment: fixed;
+}
+.btn {
+    background-color: #28a745;
+    color: rgb(3, 24, 12);
+    padding: 10px 30px;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 2em;
+    transition: background-color 0.3s ease;
+    border-width: 3px
+}
+
+.btn-menu {
+    background-color: #28a745;
+    color: rgb(3, 24, 12);
+    padding: 10px 30px;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 2em;
+    transition: background-color 0.3s ease;
+    border-width: 3px
+
+}
+
+h1 {
+    color: #7c0707;
+    font-size: 2.5em;
+}
+
+p {
+    color: #d40e0e;
+    font-size: 2em;
+}

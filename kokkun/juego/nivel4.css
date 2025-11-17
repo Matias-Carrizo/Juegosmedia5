@@ -1,0 +1,69 @@
+body {
+    font-family: sans-serif;
+    text-align: center;
+    background-image: url('alylp4i5gpex.webp');
+    background-size: cover; 
+    background-attachment: fixed;
+}
+
+#game-info {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-bottom: 20px;
+}
+
+#game-board {
+    position: relative; 
+    width: 600px; 
+    height: 200x;
+    border: 3px solid #333;
+    margin: 20px auto;
+    background-color: #faf9f9;
+    overflow: hidden; 
+    cursor: crosshair;
+}
+
+.target-image {
+    position: absolute;
+    width: 50px;   
+    height: 50px;  
+    object-fit: contain; 
+    cursor: pointer;
+    border-radius: 5px; 
+    transition: transform 0.1s;
+}
+
+.target-image:active {
+    transform: scale(0.9);
+}
+
+#start-button {
+    padding: 10px 20px;
+    font-size: 1.2em;
+    cursor: crosshair;
+    background: #e40404;
+    display: block;
+    width: 200px; 
+    margin: 20px auto; 
+}
+.target-image {
+    position: absolute;
+    width: 70px; 
+    height: 70px;
+    background-image: url('bolsa.jpg'); 
+    background-repeat: no-repeat;
+    cursor: pointer;
+    border-radius: 50%; 
+}
+
+.boton-container a {
+    background-color: #218838;
+    color:white;
+    text-decoration: none;
+    padding: 20px 40px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 1px;
+    border-radius: 20px;
+}

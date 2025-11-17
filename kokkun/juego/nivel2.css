@@ -1,0 +1,63 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 50px;
+    background-color: #f4f4f4;
+    padding: 20px;
+    background-image: url('alylp4i5gpex.webp');
+    background-size: cover; /* Ajusta la imagen para cubrir todo el fondo */
+    background-attachment: fixed;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Espacio entre las imágenes */
+    flex-wrap: wrap; /* Permite que las imágenes se adapten a la pantalla */
+}
+
+.imagen-opcion {
+    border: 5px solid transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 250px;
+    height: 250px;
+    object-fit: cover; /* Asegura que la imagen se vea bien dentro del contenedor */
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.imagen-opcion:hover {
+    transform: scale(1.05); /* Efecto de crecimiento al pasar el mouse */
+}
+
+.imagen-opcion.seleccionada {
+    border-color: dodgerblue; /* Borde azul para la imagen seleccionada */
+    box-shadow: 0 0 15px rgba(30, 144, 255, 0.5);
+}
+
+h1 {
+    color: #333;
+}
+
+p {
+    color: #666;
+    font-size: 1.2em;
+}
+
+.contenedor-imagenes {
+    display: flex; /* Usa Flexbox para colocar las imágenes en línea */
+    justify-content: center; /* Centra los elementos flexibles horizontalmente */
+    gap: 20px; /* Espacio entre las imágenes */
+    margin-top: 30px; /* Espacio superior para separar del párrafo */
+}
+.contenedor-imagenes img {
+    width: 400px; /* Ancho de las imágenes (puedes ajustarlo) */
+    height: 400px; /* Altura de las imágenes (puedes ajustarlo) */
+    object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
+    border: 2px solid #333; /* Borde simple para visualización */
+    cursor: pointer; /* Indica que la imagen es clickeable */
+    transition: transform 0.3s ease; /* Efecto de transición al pasar el ratón */
+}
+.contenedor-imagenes img:hover {
+    transform: scale(1.05); /* Ligeramente más grande al pasar el ratón */
+}

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Juego Plataformero con Scroll y Monedas</title>
+  <style>
+    body {
+      background-color: #444; /* Fondo de la página */
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+    }
+    canvas {
+      background: #000;
+      display: block;
+      margin: 20px auto;
+      border: 3px solid #fff;
+    }
+    #score {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 24px;
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div id="score">Monedas: 0</div>
+  <canvas id="gameCanvas" width="800" height="400"></canvas>
+
+<script>
+// ====== CARGAR IMÁGENES =======
+const backgroundImage = new Image();
+backgroundImage.src = 'goku.png'; // Fondo del juego
+
+const playerImage = new Image();
+playerImage.src = 'fuck you.png'; // Jugador
+
+const platformImage = new Image();
+platformImage.src = 'gok'; // Plataforma
+
+// Varias monedas distintas
+const coinImages = [
+  'coin1.png',
+  'coin2.png',
+  'coin3.png'
+].map(src => {
+  let img = new Image();
+  img.src = src;
+  return img;
+});
+
+// ====== VARIABLES DEL JUEGO =======
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+
+const GRAVITY = 0.8;
+const JUMP_FORCE = -15;
+const FRICTION = 0.8;
+
+let scrollX = 0; // cuánto se mueve el mapa
+let score = 0;   // contador de monedas
+
+// Jugador
+const player = {
+  x: 100,
+  y: 0,
+  width: 40,
+  height: 40,
+  velX: 0,
+  velY: 0,
+  grounded: false
+};
+
+// Suelo + plataformas flotantes
+const platforms = [
+  { x: 0, y: 360, width: 2000, height: 40 }, // suelo largo
+  { x: 300, y: 280, width: 120, height: 20 },
+  { x: 600, y: 220, width: 120, height: 20 },
+  { x: 900, y: 160, width: 120, height: 20 },
+  { x: 1300, y: 250, width: 120, height: 20 }
+];
+
+// Monedas
+const coins = [
+  { x: 350, y: 240, width: 30, height: 30, img: coinImages[0], collected: false },
+  { x: 620, y: 180, width: 30, height: 30, img: coinImages[1], collected: false },
+  { x: 940, y: 120, width: 30, height: 30, img: coinImages[2], collected: false },
+  { x: 1350, y: 210, width: 30, height: 30, img: coinImages[0], collected: false }
+];
+
+// Controles
+const keys = { right: false, left: false, up: false };
+
+document.addEventListener("keydown", (e) => {
+  if (e.code === "ArrowRight") keys.right = true;
+  if (e.code === "ArrowLeft") keys.left = true;
+  if (e.code === "ArrowUp") keys.up = true;
+});
+
+document.addEventListener("keyup", (e) => {
+  if (e.code === "ArrowRight") keys.right = false;
+  if (e.code === "ArrowLeft") keys.left = false;
+  if (e.code === "ArrowUp") keys.up = false;
+});
+
+// ====== LOOP PRINCIPAL DEL JUEGO ======
+function gameLoop() {
+  // Movimiento horizontal
+  if (keys.right) {
+    player.velX = 5;
+  } else if (keys.left) {
+    player.velX = -5;
+  } else {
+    player.velX *= FRICTION;
+  }
+
+  // Salto
+  if (keys.up && player.grounded) {
+    player.velY = JUMP_FORCE;
+    player.grounded = false;
+  }
+
+  // Aplicar gravedad
+  player.velY += GRAVITY;
+
+  // Actualizar posición
+  player.x += player.velX;
+  player.y += player.velY;
+
+  // Scroll horizontal (mueve el "mundo", no al jugador fijo en el centro)
+  if (player.x > canvas.width / 2) {
+    scrollX = player.x - canvas.width / 2;
+  }
+
+  // Colisiones con plataformas
+  player.grounded = false;
+  for (let plat of platforms) {
+    if (
+      player.x < plat.x + plat.width &&
+      player.x + player.width > plat.x &&
+      player.y < plat.y + plat.height &&
+      player.y + player.height > plat.y
+    ) {
+      if (player.velY > 0) { 
+        player.y = plat.y - player.height;
+        player.velY = 0;
+        player.grounded = true;
+      }
+    }
+  }
+
+  // Colisiones con monedas
+  for (let coin of coins) {
+    if (!coin.collected &&
+      player.x < coin.x + coin.width &&
+      player.x + player.width > coin.x &&
+      player.y < coin.y + coin.height &&
+      player.y + player.height > coin.y
+    ) {
+      coin.collected = true;
+      score++;
+      document.getElementById("score").innerText = "Monedas: " + score;
+    }
+  }
+
+  // Limites del canvas (caída al vacío)
+  if (player.y > canvas.height) {
+    player.x = 100;
+    player.y = 0;
+    player.velY = 0;
+    scrollX = 0;
+  }
+
+  // ====== DIBUJAR ======
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Fondo (se mueve con scrollX)
+  ctx.drawImage(backgroundImage, -scrollX * 0.5, 0, canvas.width * 2, canvas.height);
+
+  // Plataformas
+  for (let plat of platforms) {
+    ctx.drawImage(platformImage, plat.x - scrollX, plat.y, plat.width, plat.height);
+  }
+
+  // Monedas
+  for (let coin of coins) {
+    if (!coin.collected) {
+      ctx.drawImage(coin.img, coin.x - scrollX, coin.y, coin.width, coin.height);
+    }
+  }
+
+  // Jugador
+  ctx.drawImage(playerImage, player.x - scrollX, player.y, player.width, player.height);
+
+  requestAnimationFrame(gameLoop);
+}
+
+// Iniciar juego cuando las imágenes estén listas
+backgroundImage.onload = () => {
+  playerImage.onload = () => {
+    platformImage.onload = () => {
+      gameLoop();
+    };
+  };
+};
+</script>
+</body>
+</html>
